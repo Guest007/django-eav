@@ -25,10 +25,17 @@ goals of our fork:
   - Fixes the slug validation where hyphens were previously valid
 
 
+The Guest007 Fork
+-----------------
+
+Adaptation for my needs. Integrate interesting changes from other forks.
+
+
 Introduction
 ------------
 
-This is a fork of https://github.com/mvpdev/django-eav, to make it Python 3 compatible. 
+This is a fork of https://github.com/mvpdev/django-eav, to make it Python 3,
+Django 1.9 compatible and for other needs.
 
 
 django-eav provides an Entity-Attribute-Value storage model for django apps.
@@ -59,7 +66,7 @@ From Github
 ~~~~~~~~~~~
 You can install django-eav directly from guthub::
 
-    pip install -e git+git://github.com/mvpdev/django-eav.git#egg=django-eav
+    pip install -e git+git://github.com/guest007/django-eav.git#egg=django-eav
 
 Usage
 -----

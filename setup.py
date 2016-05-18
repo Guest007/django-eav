@@ -21,12 +21,12 @@ from setuptools import setup
 
 setup(
     name='django-eav',
-    version='0.9.2-isotoma3',
+    version='0.9.2-guest007-1',
     description='Entity-attribute-value model implementation as a reusable Django app',
     long_description=open('README.rst').read(),
     license = 'GNU Lesser General Public License (LGPL), Version 3',
-    url='https://github.com/mvpdev/django-eav',
-    packages=['eav', 'eav.tests', 'eav.migrations_south'],
+    url='https://github.com/guest007/django-eav',
+    packages=['eav', 'eav.tests', 'eav.migrations', 'eav.static'],
     include_package_data=True,
     zip_safe=False,
     classifiers=[

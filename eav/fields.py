@@ -52,8 +52,8 @@ class EavSlugField(models.SlugField):
         super(EavSlugField, self).validate(value, instance)
         slug_regex = r'^[a-z][a-z0-9_]*$'
         if not re.match(slug_regex, value):
-            raise ValidationError(_(u"Must be all lower case, " \
-                                    u"start with a letter, and contain " \
+            raise ValidationError(_(u"Must be all lower case, "
+                                    u"start with a letter, and contain "
                                     u"only letters, numbers, or underscores."))
 
     @staticmethod
@@ -82,16 +82,11 @@ class EavDatatypeField(models.CharField):
         :class:`~eav.models.Value` objects.
         '''
         super(EavDatatypeField, self).validate(value, instance)
-        # from .models import Attribute
+        from .models import Attribute
         if not instance.pk:
             return
+        if instance.value_set.count():  # Can change type if not used (ex. immediately after creating)
         # if Attribute.objects.get(id=instance.pk).datatype != instance.datatype:
-        #     raise ValidationError(_(u"You cannot change the datatype of an "
-        #                             u"attribute that is already in use."))
-try:
-    from south.modelsinspector import add_introspection_rules
-except ImportError:
-    pass
-else:
-    add_introspection_rules([], ["^eav\.fields\.EavSlugField"])
-    add_introspection_rules([], ["^eav\.fields\.EavDatatypeField"])
+            raise ValidationError(_(u"You cannot change the datatype of an "
+                                    u"attribute that is already in use."))
+
