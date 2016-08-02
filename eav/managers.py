@@ -28,7 +28,6 @@ Functions and Classes
 from functools import wraps
 from django.db import models
 from .models import Attribute, Value
-from django.contrib.auth.models import UserManager
 
 
 def eav_filter(func):
@@ -193,8 +192,4 @@ class MixinEntityManager(object):
 
 
 class EntityManager(models.Manager, MixinEntityManager):
-    pass
-
-
-class UserManager(UserManager, MixinEntityManager):
     pass
