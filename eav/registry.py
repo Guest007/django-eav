@@ -31,7 +31,7 @@ from django.db.utils import DatabaseError
 from django.db.models.signals import pre_init, post_init, pre_save, post_save
 from django.contrib.contenttypes.fields import GenericRelation
 
-from .managers import EntityManager
+from .managers import EntityManager, MixinEntityManager, UserManager
 from .models import Entity, Attribute, Value
 
 
@@ -125,7 +125,10 @@ class Registry(object):
             self.config_cls.old_mgr = mgr
 
         # attache the new manager to the model
-        mgr = EntityManager()
+        if 'User' in str(self.model_cls):  # FIXME: How it can be more universal??
+            mgr = UserManager()
+        else:
+            mgr = EntityManager()
         mgr.contribute_to_class(self.model_cls, self.config_cls.manager_attr)
 
     def _detach_manager(self):

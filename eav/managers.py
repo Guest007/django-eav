@@ -26,10 +26,9 @@ Functions and Classes
 ---------------------
 '''
 from functools import wraps
-
 from django.db import models
-
 from .models import Attribute, Value
+from django.contrib.auth.models import UserManager
 
 
 def eav_filter(func):
@@ -123,7 +122,7 @@ def expand_eav_filter(model_cls, key, value):
         return '%s__%s' % (fields[0], key), value
 
 
-class EntityManager(models.Manager):
+class MixinEntityManager(object):
     '''
     Our custom manager, overriding ``models.Manager``
     '''
@@ -191,3 +190,11 @@ class EntityManager(models.Manager):
             defaults = kwargs.pop('defaults', {})
             kwargs.update(**defaults)
             return self.create(**kwargs), True
+
+
+class EntityManager(models.Manager, MixinEntityManager):
+    pass
+
+
+class UserManager(UserManager, MixinEntityManager):
+    pass

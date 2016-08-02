@@ -111,6 +111,20 @@ Assign eav values
 
     >>> p = MyModel.objects.create(eav__weight = 12, eav__color='red')
 
+    >>> attribute_slug = 'weight'
+    >>> value = 42.0
+    >>> m.eav.__dict__[attribute_slug] = value
+
+
+Get attribute's value
+~~~~~~~~~~~~~~~~~~~~~
+::
+
+    >>> attribute = Attribute.objects.get(slug=weight)
+    >>> m.eav.get_value_by_attribute(attribute).value
+    42.0
+
+
 Filter on eav values
 ~~~~~~~~~~~~~~~~~~~~
 ::
