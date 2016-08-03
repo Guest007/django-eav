@@ -126,7 +126,6 @@ class Registry(object):
             self.config_cls.old_mgr = mgr
 
         # attache the new manager to the model
-        # newm = types.new_class('NewManager', (MixinEntityManager, self.model_cls.objects))
         mgr = EntityManager()
         mgr.contribute_to_class(self.model_cls, self.config_cls.manager_attr)
 
