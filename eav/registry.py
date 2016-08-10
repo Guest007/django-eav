@@ -125,8 +125,13 @@ class Registry(object):
             mgr = getattr(self.model_cls, self.config_cls.manager_attr)
             self.config_cls.old_mgr = mgr
 
+        newm = types.new_class(
+            'NewManager',
+            bases=(self.model_cls.objects.__class__, MixinEntityManager))
+
         # attache the new manager to the model
-        mgr = EntityManager()
+        # mgr = EntityManager()
+        mgr = newm()
         mgr.contribute_to_class(self.model_cls, self.config_cls.manager_attr)
 
     def _detach_manager(self):
