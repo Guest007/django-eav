@@ -28,7 +28,7 @@ Classes
 '''
 from copy import deepcopy
 
-from django.forms import BooleanField, CharField, DateTimeField, FloatField, \
+from django.forms import BooleanField, CharField, SplitDateTimeField, FloatField, \
                          IntegerField, ModelForm, ModelChoiceField, ValidationError
 from django.contrib.admin.widgets import AdminSplitDateTime
 from django.utils.translation import ugettext_lazy as _
@@ -49,7 +49,7 @@ class BaseDynamicEntityForm(ModelForm):
         'text': CharField,
         'float': FloatField,
         'int': IntegerField,
-        'date': DateTimeField,
+        'date': SplitDateTimeField,
         'bool': BooleanField,
         'enum': ModelChoiceField,
     }
