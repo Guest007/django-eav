@@ -150,7 +150,7 @@ class AttributeAdmin(ModelAdmin):
             static.url('eav/js/attribute_admin.js'),
         )
 
-    list_display = ('name', 'slug', 'datatype', 'description', 'site')
+    list_display = ('name', 'content_type', 'slug', 'datatype', 'description', 'site')
     list_filter = ['site']
     prepopulated_fields = {'slug': ('name',)}
 

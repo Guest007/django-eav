@@ -113,7 +113,8 @@ def expand_eav_filter(model_cls, key, value):
     except models.FieldDoesNotExist:
         return key, value
 
-    if direct:
+    # if direct:
+    if not field.auto_created or field.concrete:
         return key, value
     else:
         sub_key = '__'.join(fields[1:])

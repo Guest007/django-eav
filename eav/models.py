@@ -152,8 +152,10 @@ class Attribute(models.Model):
     '''
 
     class Meta:
-        ordering = ['name']
-        unique_together = ('site', 'slug')
+        # ordering = ['name']
+        # unique_together = ('site', 'slug')
+        ordering = ['content_type', 'name']
+        unique_together = ('site', 'content_type', 'slug')
 
     TYPE_TEXT = 'text'
     TYPE_FLOAT = 'float'
@@ -175,6 +177,10 @@ class Attribute(models.Model):
 
     name = models.CharField(_(u"name"), max_length=100,
                             help_text=_(u"User-friendly attribute name"))
+
+    content_type = models.ForeignKey(ContentType,
+                                     blank = True, null = True,
+                                     verbose_name = _(u"content type"))
 
     site = models.ForeignKey(Site, verbose_name=_(u"site"))
 
@@ -203,6 +209,8 @@ class Attribute(models.Model):
     modified = models.DateTimeField(_(u"modified"), auto_now=True)
 
     required = models.BooleanField(_(u"required"), default=False)
+
+    display_order = models.PositiveIntegerField(_(u"display order"), default=1)
 
     objects = models.Manager()
     on_site = CurrentSiteManager()
@@ -311,7 +319,8 @@ class Attribute(models.Model):
             value_obj.save()
 
     def __str__(self):
-        return u"%s (%s)" % (self.name, self.get_datatype_display())
+        # return u"%s (%s)" % (self.name, self.get_datatype_display())
+        return u"%s.%s (%s)" % (self.content_type, self.name, self.get_datatype_display())
 
 
 class Value(models.Model):
@@ -441,7 +450,9 @@ class Entity(object):
         Return a query set of all :class:`Attribute` objects that can be set
         for this entity.
         '''
-        return self.model._eav_config_cls.get_attributes(**kwargs)
+        return self.model._eav_config_cls.get_attributes(**kwargs).filter(
+            models.Q(content_type__isnull=True) | models.Q(content_type=self.ct)
+        ).order_by('display_order')
 
     def _hasattr(self, attribute_slug):
         '''
